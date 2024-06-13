@@ -858,8 +858,8 @@ MonoBehaviour:
   dashSpeed: 20
   dashSpeedChangeFactor: 50
   maxYSpeed: 5
-  groundDrag: 4
-  jumpForce: 7
+  groundDrag: 2
+  jumpForce: 5
   jumpCooldown: 0.25
   airMultiplier: 0.4
   crouchSpeed: 3
