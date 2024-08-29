@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -755,7 +755,7 @@ RectTransform:
   m_Children:
   - {fileID: 434994368}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -814,7 +814,7 @@ Transform:
   - {fileID: 268237051}
   - {fileID: 1124807170}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &883438797
 MonoBehaviour:
@@ -831,10 +831,10 @@ MonoBehaviour:
   orientation: {fileID: 268237051}
   playerCam: {fileID: 941797281}
   dashForce: 30
-  dashUpwardForce: -20
+  dashUpwardForce: -3
   maxDashYSpeed: 0
   dashDuration: 0.25
-  cam: {fileID: 941797282}
+  cam: {fileID: 941797285}
   dashFov: 95
   useCameraForward: 1
   allowAllDirections: 1
@@ -873,6 +873,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   maxSlopeAngle: 40
+  playerCamera: {fileID: 941797281}
+  tiltAmount: 10
+  tiltSpeed: 15
   orientation: {fileID: 268237051}
   state: 0
   dashing: 0
@@ -899,7 +902,7 @@ GameObject:
   - component: {fileID: 941797281}
   - component: {fileID: 941797284}
   - component: {fileID: 941797283}
-  - component: {fileID: 941797282}
+  - component: {fileID: 941797285}
   m_Layer: 0
   m_Name: PlayerCam
   m_TagString: Untagged
@@ -922,21 +925,6 @@ Transform:
   m_Father: {fileID: 572725985}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &941797282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 941797280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 292dbe5738de9e44d8b0a0c5e6c478f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sensX: 100
-  sensY: 100
-  orientation: {fileID: 268237051}
 --- !u!81 &941797283
 AudioListener:
   m_ObjectHideFlags: 0
@@ -988,6 +976,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &941797285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941797280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 292dbe5738de9e44d8b0a0c5e6c478f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensX: 100
+  sensY: 100
+  orientation: {fileID: 268237051}
 --- !u!1 &1030401981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,7 +1349,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 2033892162}
   Player: {fileID: 883438794}
-  speed: 0.1
+  speed: 0
 --- !u!135 &2033892164
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1423,7 +1426,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2033892168
 Rigidbody:

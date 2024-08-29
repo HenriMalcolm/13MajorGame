@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerMovementAdvanced : MonoBehaviour
 {
@@ -43,6 +42,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
+    [Header("Camera")]
+    public Transform playerCamera;    // Reference to the player camera
+    public float tiltAmount = 10.0f;  // The amount the camera tilts
+    public float tiltSpeed = 5.0f;    // Speed of the camera tilt
 
     public Transform orientation;
 
@@ -50,6 +53,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     float verticalInput;
 
     Vector3 moveDirection;
+    Vector3 smoothedMoveDirection;
 
     Rigidbody rb;
 
@@ -89,6 +93,12 @@ public class PlayerMovementAdvanced : MonoBehaviour
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+        // Smooth the move direction
+        smoothedMoveDirection = Vector3.Lerp(smoothedMoveDirection, moveDirection, Time.deltaTime * tiltSpeed);
+
+        // Tilt the camera based on movement direction
+        TiltCamera();
     }
 
     private void FixedUpdate()
@@ -253,7 +263,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
                 rb.velocity = rb.velocity.normalized * moveSpeed;
         }
 
-        // limiting speed on ground or in air
+        // limits speed on ground or in air
         else
         {
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -266,7 +276,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
             }
         }
 
-        // limit y vel
+        // limit y velocity
         if (maxYSpeed != 0 && rb.velocity.y > maxYSpeed)
             rb.velocity = new Vector3(rb.velocity.x, maxYSpeed, rb.velocity.z);
     }
@@ -303,7 +313,21 @@ public class PlayerMovementAdvanced : MonoBehaviour
         return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
     }
 
-    
+    private void TiltCamera()
+    {
+        if (moveDirection != Vector3.zero)
+        {
+            // Calculate the tilt angle based on smoothed movement direction
+            float tiltZ = Vector3.Dot(smoothedMoveDirection, orientation.right) * -tiltAmount;  // Tilt around Z-axis
+            float tiltX = Vector3.Dot(smoothedMoveDirection, orientation.forward) * tiltAmount; // Tilt around X-axis
+
+            // Create a new rotation for the camera
+            Quaternion targetRotation = Quaternion.Euler(playerCamera.localEulerAngles.x + tiltX, playerCamera.localEulerAngles.y, tiltZ);
+
+            // Smoothly rotate the camera towards the target rotation
+            playerCamera.localRotation = Quaternion.Slerp(playerCamera.localRotation, targetRotation, Time.deltaTime * tiltSpeed);
+        }
+    }
 
     public static float Round(float value, int digits)
     {
